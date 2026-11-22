@@ -1,0 +1,8 @@
+Graphics credits
+- beaker.svg — "Beaker.svg" by Amada44, Wikimedia Commons, public domain.
+- thermometer.svg — "Thermometer.svg" by Werneuchen, Wikimedia Commons, public domain.
+- alcohol-lamp.svg — "202002 Laboratory instrument alcohol lamp.svg", DataBase Center for Life Science (DBCLS), CC BY 4.0, Wikimedia Commons.
+- flask-blue.svg — "202004 flask blue.svg", DBCLS, CC BY 4.0, Wikimedia Commons.
+- flask-decor.svg — "202101 Flask.svg", DBCLS, CC BY 4.0, Wikimedia Commons.
+CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+All other graphics (piston cylinder, gauges, bell jar, vapour particles) are drawn in code.

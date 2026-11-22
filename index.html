@@ -1,0 +1,83 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Лаборатория</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+
+<header class="top">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">H₂O</span>
+    <div>
+      <h1>Лаборатория</h1>
+      <p>Насыщенный и ненасыщенный пар · 10 класс</p>
+    </div>
+  </div>
+  <ol class="progress" id="progress" aria-label="Опыты"></ol>
+  <div class="top-actions">
+    <span class="score" id="score">0 / 15 ★</span>
+    <button class="btn btn-ghost" id="table-btn" type="button">Таблица p₀</button>
+    <button class="btn btn-ghost" id="about" type="button">Об игре</button>
+  </div>
+</header>
+
+<main class="lab">
+  <section class="stage-wrap" aria-label="Лабораторный стол">
+    <canvas id="stage" aria-label="Опыт: перетаскивайте приборы мышью или пальцем"></canvas>
+    <p class="stage-tip">Элементы с пунктирным кругом можно двигать мышью или пальцем</p>
+    <div class="toast" id="toast" role="status" hidden></div>
+  </section>
+
+  <aside class="journal" aria-label="Журнал наблюдений">
+    <div class="journal-head">
+      <span class="kicker" id="round-kicker">Опыт 1 из 5</span>
+      <h2 id="round-title">…</h2>
+      <p class="goal" id="round-goal"></p>
+    </div>
+
+    <div class="block">
+      <h3>Управление</h3>
+      <div class="controls" id="controls"></div>
+    </div>
+
+    <div class="block">
+      <h3>Показания приборов</h3>
+      <dl class="readings" id="readings"></dl>
+    </div>
+
+    <div class="block" id="graph-box" hidden>
+      <h3 id="graph-caption">График</h3>
+      <canvas id="graph" class="graph"></canvas>
+      <div id="table-box" class="rec-table" hidden></div>
+    </div>
+
+    <div class="block task-block">
+      <div class="task-head">
+        <h3 id="task-count">Задание</h3>
+        <div class="task-tools">
+          <button class="btn btn-small" id="theory" type="button">Теория</button>
+          <button class="btn btn-small" id="hint" type="button" title="Подсказка снижает оценку за опыт">Подсказка</button>
+        </div>
+      </div>
+      <div id="task"></div>
+      <p class="feedback" id="feedback" role="status" hidden></p>
+      <button class="btn btn-next" id="next" type="button" hidden>Дальше</button>
+    </div>
+  </aside>
+</main>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title"></h2>
+    <div id="modal-body"></div>
+    <div class="modal-actions" id="modal-actions"></div>
+  </div>
+</div>
+
+<script src="js/physics.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/rounds.js"></script>
+<script src="js/game.js"></script>
