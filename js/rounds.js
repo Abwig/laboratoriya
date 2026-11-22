@@ -211,6 +211,10 @@
         if (s.rec.some(r => Math.abs(r[0] - t) < 3)) { ui.toast('Точка при этой температуре уже записана. Нагрейте колбу сильнее.'); return; }
         s.rec.push([t, p]); s.rec.sort((a, b) => a[0] - b[0]); ui.refresh();
       });
+      ui.button('Очистить таблицу', () => {
+        if (!this.s.rec.length) { ui.toast('Таблица и так пустая.'); return; }
+        this.s.rec = []; ui.refresh(); ui.toast('Таблица очищена. Запишите точки заново.');
+      });
     },
     update(dt) {
       const s = this.s, target = 20 + 0.68 * s.power;
