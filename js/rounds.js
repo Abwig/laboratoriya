@@ -159,14 +159,12 @@
       // трубка к манометру
       ctx.strokeStyle = '#5d6b70'; ctx.lineWidth = 6;
       ctx.beginPath(); ctx.moveTo(s.x + s.w, s.bottom - 10); ctx.lineTo(600, s.bottom - 10); ctx.lineTo(600, 280); ctx.stroke();
-      S.gauge(ctx, 600, 210, 66, st.p, 3, 'кПа', `p = ${fmt(st.p, 2)} кПа`, p0(20));
+      S.gauge(ctx, 600, 210, 66, st.p, 3, 'кПа', `p = ${fmt(st.p, 2)} кПа`, null);
       S.plate(ctx, s.x + s.w / 2, BENCH + 42, `V = ${fmt(s.V, 0)} см³   t = 20 °C`);
-      if (st.saturated) S.plate(ctx, 600, 330, 'пар насыщенный', '#9fe3ff');
     },
     readings() {
       const st = this.state();
-      return [['Объём', fmt(this.s.V, 0) + ' см³'], ['Давление пара', fmt(st.p, 2) + ' кПа'], ['Пар', st.saturated ? 'насыщенный' : 'ненасыщенный'],
-        ['Влажность φ', fmt(st.p / p0(20) * 100, 0) + ' %']];
+      return [['Объём', fmt(this.s.V, 0) + ' см³'], ['Давление пара', fmt(st.p, 2) + ' кПа']];
     },
     graph: {
       xr: [0, 100], yr: [0, 3], xl: 'V, см³', yl: 'p, кПа', xs: 20, ys: 0.5,
@@ -178,7 +176,7 @@
     tasks: [
       {
         type: 'num', prompt: 'Медленно опускайте поршень. При каком объёме пар становится насыщенным (появляются первые капли)?', unit: 'см³', answer: 40, tol: 3,
-        hint: 'Капли появляются, когда стрелка манометра доходит до красной отметки p₀ = 2,34 кПа. Можно посчитать: p₁V₁ = p₀V.',
+        hint: 'Следите за дном и стенками цилиндра и за манометром: с какого объёма давление перестаёт расти? Можно и посчитать: p₁V₁ = p₀V, где p₀(20 °C) = 2,34 кПа.',
         explain: 'p₁V₁ = p₀V ⇒ V = 0,94 · 100 / 2,34 ≈ 40 см³.'
       },
       {
@@ -343,11 +341,10 @@
       ctx.fillStyle = '#3a4448'; S.roundRect(ctx, 605, hy - 72, 74, 14, 6); ctx.fill();
       if (!s.drag) S.grip(ctx, 642, hy - 65, false, t);
       S.gauge(ctx, 560, 170, 56, s.p, 110, 'кПа', `p = ${fmt(s.p, 1)} кПа`, null);
-      S.plate(ctx, 325, 150, s.boil ? 'вода кипит!' : (s.p < p0(this.T) * 1.3 ? 'появляются пузырьки' : 'вода не кипит'), s.boil ? '#ffd28a' : C.ink);
     },
     readings() {
       const s = this.s;
-      return [['Давление под колоколом', fmt(s.p, 1) + ' кПа'], ['Температура воды', '60,0 °C'], ['Состояние', s.boil ? 'кипит' : 'не кипит']];
+      return [['Давление под колоколом', fmt(s.p, 1) + ' кПа'], ['Температура воды', '60,0 °C']];
     },
     hit(x, y) { const hy = 250 + this.s.handle * 90; return Math.abs(x - 642) < 50 && Math.abs(y - (hy - 65)) < 30; },
     drag(x, y) {
@@ -412,7 +409,7 @@
       ctx.fillStyle = 'rgba(58,160,216,.8)'; ctx.beginPath(); ctx.ellipse(c.x + c.w / 2, c.y + 6, c.w / 2 - 3, 7, 0, 0, Math.PI * 2); ctx.fill();
       s.ice.forEach((k, i) => { ctx.fillStyle = 'rgba(230,248,255,.9)'; ctx.fillRect(c.x + 14 + (i * 23) % 80, c.y - 2 + (i % 2) * 4, 18, 9); });
       // запотевание
-      if (s.fog > 0.01) { ctx.fillStyle = `rgba(235,245,250,${0.35 * s.fog})`; S.roundRect(ctx, c.x, c.y + 12, c.w, c.h - 12, 8); ctx.fill(); }
+      if (s.fog > 0.01) { ctx.fillStyle = `rgba(235,245,250,${0.5 * s.fog})`; S.roundRect(ctx, c.x, c.y + 12, c.w, c.h - 12, 8); ctx.fill(); }
       ctx.fillStyle = 'rgba(210,238,252,.9)';
       for (const d of s.drops) { ctx.beginPath(); ctx.ellipse(d.x, d.y, d.r * 0.8, d.r, 0, 0, Math.PI * 2); ctx.fill(); }
       // термометр в стакане
@@ -428,11 +425,10 @@
         S.roundRect(ctx, k.x, k.y, 30, 28, 5); ctx.fill(); ctx.stroke();
       }
       if (s.tray.some(k => k.home) && !s.dragIce) S.grip(ctx, 610, BENCH - 50, false, t);
-      if (s.fog > 0.2) S.plate(ctx, c.x + c.w / 2, c.y - 24, 'стенки запотели', '#9fe3ff');
     },
     readings() {
       const s = this.s;
-      return [['Температура воздуха', this.room + ',0 °C'], ['Температура стакана', fmt(s.T, 1) + ' °C'], ['Стенки', s.fog > 0.05 ? 'запотели' : 'сухие']];
+      return [['Температура воздуха', this.room + ',0 °C'], ['Температура стакана', fmt(s.T, 1) + ' °C']];
     },
     hit(x, y) { const k = this.s.tray.find(k => k.home && x >= k.x - 6 && x <= k.x + 36 && y >= k.y - 6 && y <= k.y + 34); if (k) { this.s.dragIce = k; k.home = false; return true; } return false; },
     drag(x, y) { const k = this.s.dragIce; if (k) { k.x = x - 15; k.y = y - 14; } },
