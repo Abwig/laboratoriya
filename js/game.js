@@ -112,7 +112,7 @@
         const inp = f.querySelector('input'), v = parseFloat(inp.value.replace(',', '.').trim());
         if (Number.isNaN(v)) { show('Введите число, например 12,5.', 'warn'); return; }
         if (Math.abs(v - t.answer) <= t.tol) { inp.disabled = true; f.querySelector('button').disabled = true; solved(t.explain); }
-        else miss(v > t.answer ? 'Слишком много. Проверьте измерение или расчёт.' : 'Слишком мало. Проверьте измерение или расчёт.');
+        else miss((t.wrong && t.wrong(R, v)) || (v > t.answer ? 'Слишком много. Проверьте измерение или расчёт.' : 'Слишком мало. Проверьте измерение или расчёт.'));
       });
       box.appendChild(f);
     } else {
