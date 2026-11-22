@@ -25,6 +25,7 @@
 }
 
 [hidden] { display: none !important; }
+table { color: inherit; font-size: inherit; font-family: inherit; }
 *, *::before, *::after { box-sizing: border-box; }
 html, body { min-height: 100%; margin: 0; }
 body {
